@@ -1,0 +1,7 @@
+Com base nas tabelas disponibilizado neste teste, criar uma Function, uma Procedure e uma Trigger, conforme requisitos abaixo:
+•	uma procedure PL/SQL para compra com 
+tratamento de exceções, 
+(informando o id do cliente, 
+id do produto e quantidade), 
+em caso de erro 
+fazer rollback da transação.
