@@ -1,3 +1,8 @@
-•	Com base nas tabelas disponibilizado neste teste, criar uma Function, uma Procedure e uma Trigger, conforme requisitos abaixo:
-•	Criar uma trigger PL/SQL que calcula automaticamente o total do pedido sempre que um novo item do pedido é inserido. A trigger será acionada após a inserção de um novo item na tabela itens_pedido.
+//	Criar uma trigger PL/SQL que calcula automaticamente o total do pedido sempre que um novo item do pedido é inserido. A trigger será acionada após a inserção de um novo item na tabela itens_pedido.
+CREATE OR REPLACE TRIGGER TRG_CALC_TOTAL_PEDIDO
+AFTER INSERT OF ITENS_PEDIDO ON ITENS_PEDIDO.PEDIDO_ID
+BEGIN
+  FN_TOTAL_PEDIDO       (ITENS_PEDIDO.PEDIDO_ID, ITENS_PEDIDO.PRODUTO_ID NUMBER);
+  DBMS_OUTPUT.PUT_LINE('Atualização feita com sucesso!');
+END;
 
