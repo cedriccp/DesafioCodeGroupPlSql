@@ -1,4 +1,4 @@
-Criar uma function PL/SQL que calcule o total de um pedido (informando o ID do pedido).
+//Criar uma function PL/SQL que calcule o total de um pedido (informando o ID do pedido).
 CREATE OR REPLACE FUNCTION FN_TOTAL_PEDIDO
        ( PEDIDOS.PEDIDO_ID NUMBER  PEDIDOS.PRODUTO_ID NUMBER)
        RETURN BOLEAN
@@ -25,9 +25,13 @@ UPDATE PEDIDO
 SET TOTAL_PEDIDO = V_TOTALPEDIDO
 WHERE PEDIDO_ID = V_PEDIDO AND
 PRODUTO_ID = V_PRODUTO;
-IF (V_TOTALPEDIDO) > 0 
+COMMIT;
 V_RETORNAVALOR := TRUE; 
-ELSE V_RETORNAVALOR := FALSE; 
+DBMS_
+OUTPUT.PUT_LINE('Total do pedido: ' || V_PEDIDO || ' Atualizado.');
+ELSE 
+ROLLBACK;
+V_RETORNAVALOR := FALSE; 
 END IF;    
 RETURN V_RETORNAVALOR;
 END FN_TOTAL_PEDIDO;
