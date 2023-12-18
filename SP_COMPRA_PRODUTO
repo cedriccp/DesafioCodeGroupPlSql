@@ -1,7 +1,49 @@
-Com base nas tabelas disponibilizado neste teste, criar uma Function, uma Procedure e uma Trigger, conforme requisitos abaixo:
-•	uma procedure PL/SQL para compra com 
-tratamento de exceções, 
-(informando o id do cliente, 
-id do produto e quantidade), 
-em caso de erro 
-fazer rollback da transação.
+// procedure PL/SQL para compra com tratamento de exceções, (informando o id do cliente, id do produto e quantidade), em caso de erro fazer rollback da transação.
+
+CREATE OR REPLACE PROCEDURE SP_COMPRA_PRODUTO  
+(
+IN V_PRODUTO NUMBER;
+IN V_CLIENTE NUMBER;
+IN V_QUANTIDADE NUMBER(15,4));
+AS
+V_PEDIDO NUMBER;
+V_ITEM NUMBER;
+
+//A sp foi programada apenas para novos pedidos
+
+BEGIN 
+
+SELECT * FROM CLIENTES WHERE 
+CLIENTE_ID = V_CLIENTE;
+
+SELECT * FROM PRODUTOS WHERE PRODUTO_ID = V_PRODUTO;
+
+SELECT MAX(PEDIDO_ID) INTO V_PEDIDO FROM PEDIDOS;
+V_PEDIDO := V_PEDIDO + 1;
+
+SELECT MAX(ITEM_ID)
+INTO V_ITEM
+FROM ITENS_PEDIDOS;
+V_ITEM := V_ITEM + 1;
+
+INSERT INTO PEDIDO
+(PEDIDO_ID, CLIENTE_ID, DATA_PEDIDO, TOTAL_PEDIDO)
+VALUES
+(V_PEDIDO, V_CLIENTE, SYSDATE, O);
+
+// podendo executar a função ou a trigger criada daqui (EXECUTE FN_TOTAL_PEDIDO(V_PEDIDO, V_PRODUTO) para atualizar o total do pedido
+// *******
+
+INSERT INTO ITENS_PEDIDO (ITEM_ID, PEDIDO_ID, PRODUTO_ID, QUANTIDADE)
+VALUES 
+(V_ITEM, V_PEDIDO, V_PRODUTO, V_QUANTIDADE)
+
+
+EXCEPTION
+WHEN OTHERS THEN 
+   DBMS_OUTPUT.PUT_LINE('não foi possível cadastrar o Pedido ' || V_PEDIDO || ' erro:' SQLERRM);
+ROLLBACK;
+
+END;
+
+END SP_COMPRA_PRODUTO;
