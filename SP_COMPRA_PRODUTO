@@ -31,8 +31,7 @@ INSERT INTO PEDIDO
 VALUES
 (V_PEDIDO, V_CLIENTE, SYSDATE, O);
 
-// podendo executar a função ou a trigger criada daqui (EXECUTE FN_TOTAL_PEDIDO(V_PEDIDO, V_PRODUTO) para atualizar o total do pedido
-// *******
+ FN_TOTAL_PEDIDO(V_PEDIDO, V_PRODUTO);
 
 INSERT INTO ITENS_PEDIDO (ITEM_ID, PEDIDO_ID, PRODUTO_ID, QUANTIDADE)
 VALUES 
